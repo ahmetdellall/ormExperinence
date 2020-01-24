@@ -1,12 +1,31 @@
 package orm.ex.model;
 
-import java.sql.Timestamp;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+@Entity
 public class Language {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "language_id",columnDefinition = "TINYINT")
 	private int languageId;
+	@Column(length = 20,nullable = false)
 	private String name;
-	private Timestamp lastUpdate;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date lastUpdate;
+	
 
 	public int getLanguageId() {
 		return languageId;
@@ -24,11 +43,11 @@ public class Language {
 		this.name = name;
 	}
 
-	public Timestamp getLastUpdate() {
+	public Date getLastUpdate() {
 		return lastUpdate;
 	}
 
-	public void setLastUpdate(Timestamp lastUpdate) {
+	public void setLastUpdate(Date lastUpdate) {
 		this.lastUpdate = lastUpdate;
 	}
 

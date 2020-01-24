@@ -1,19 +1,48 @@
 package orm.ex.model;
 
-import java.sql.Blob;
-import java.sql.Timestamp;
+import java.util.Date;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+@Entity
 public class Address {
-	
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(nullable = false, unique = true, columnDefinition = "SMALLINT")
 	private int addresId;
+
+	@Column(length = 50, nullable = false)
 	private String address;
+	
+	@Column(length = 50, nullable = true, columnDefinition = " VARCHAR(50) DEFAULT NULL")
 	private String addressTwo;
+
+	@Column(length = 50, nullable = false)
 	private String district;
+
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "cityId", referencedColumnName = "cityId", nullable = false)
 	private City city;
+
+	@Column(length = 10, nullable = false)
 	private int postalCode;
+	@Column(length = 20, nullable = false)
 	private String phoneNumber;
-	private Blob location;
-	private Timestamp addressLastUpdate;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable = false, columnDefinition =  "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
+	private Date addressLastUpdate;
 
 	public int getAddresId() {
 		return addresId;
@@ -71,19 +100,11 @@ public class Address {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public Blob getLocation() {
-		return location;
-	}
-
-	public void setLocation(Blob location) {
-		this.location = location;
-	}
-
-	public Timestamp getAddressLastUpdate() {
+	public Date getAddressLastUpdate() {
 		return addressLastUpdate;
 	}
 
-	public void setAddressLastUpdate(Timestamp addressLastUpdate) {
+	public void setAddressLastUpdate(Date addressLastUpdate) {
 		this.addressLastUpdate = addressLastUpdate;
 	}
 
@@ -91,6 +112,6 @@ public class Address {
 	public String toString() {
 		return "Address [addresId=" + addresId + ", address=" + address + ", addressTwo=" + addressTwo + ", district="
 				+ district + ", city=" + city + ", postalCode=" + postalCode + ", phoneNumber=" + phoneNumber
-				+ ", location=" + location + ", addressLastUpdate=" + addressLastUpdate + "]";
+				+ ", addressLastUpdate=" + addressLastUpdate + "]";
 	}
 }

@@ -1,17 +1,51 @@
 package orm.ex.model;
 
-import java.sql.Timestamp;
 
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+@Entity
 public class Customer {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(columnDefinition = "SMALLINT", nullable = false)
 	private int customerId;
+	
+	@ManyToOne(fetch = FetchType.EAGER, targetEntity = Store.class)
+	@JoinColumn(name = "storeId", nullable = false, referencedColumnName = "StoreId", columnDefinition = "TINYINT")
 	private Store store;
+	
+	@Column(length = 45, nullable = false)
 	private String customerFirstName;
+	@Column(length = 45, nullable = false)
 	private String customerLastName;
+	@Column(length = 50, nullable = true )
 	private String email;
+	
+	@ManyToOne(targetEntity = Address.class, fetch = FetchType.LAZY)
+	@JoinColumn(name = "adressId", nullable = false, columnDefinition = "SMALLINT")
 	private Address address;
+	@Column(nullable = false, columnDefinition = "bit default 0" )
 	private boolean active;
-	private Timestamp customerCreateDate;
-	private Timestamp lastUpdateCostumer;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable = false, columnDefinition =  "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
+	private Date customerCreateDate;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable = false, columnDefinition =  "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
+	private Date lastUpdateCostumer;
 
 	public int getCustomerId() {
 		return customerId;
@@ -69,19 +103,19 @@ public class Customer {
 		this.active = active;
 	}
 
-	public Timestamp getCustomerCreateDate() {
+	public Date getCustomerCreateDate() {
 		return customerCreateDate;
 	}
 
-	public void setCustomerCreateDate(Timestamp customerCreateDate) {
+	public void setCustomerCreateDate(Date customerCreateDate) {
 		this.customerCreateDate = customerCreateDate;
 	}
 
-	public Timestamp getLastUpdateCostumer() {
+	public Date getLastUpdateCostumer() {
 		return lastUpdateCostumer;
 	}
 
-	public void setLastUpdateCostumer(Timestamp lastUpdateCostumer) {
+	public void setLastUpdateCostumer(Date lastUpdateCostumer) {
 		this.lastUpdateCostumer = lastUpdateCostumer;
 	}
 

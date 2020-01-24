@@ -1,17 +1,44 @@
 package orm.ex.model;
 
-import java.sql.Date;
-import java.sql.Timestamp;
 
+
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+@Entity
 public class Rental {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "rental_id", nullable = false)
 	private int rentalId;
+	
+	@Temporal(TemporalType.DATE)
 	private Date rentalDate;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "inventory_id", nullable = false, columnDefinition = "mediumint")
 	private Inventory inventory;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "customer_id", nullable = false, columnDefinition = "smallint")
 	private Customer customer;
+	@Temporal(TemporalType.DATE)
 	private Date returnDate;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "staff_id", nullable = false, columnDefinition = "tinyint")
 	private Staff staff;
-	private Timestamp lastUpdate;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date lastUpdate;
 
 	public int getRentalId() {
 		return rentalId;
@@ -61,11 +88,11 @@ public class Rental {
 		this.staff = staff;
 	}
 
-	public Timestamp getLastUpdate() {
+	public Date getLastUpdate() {
 		return lastUpdate;
 	}
 
-	public void setLastUpdate(Timestamp lastUpdate) {
+	public void setLastUpdate(Date lastUpdate) {
 		this.lastUpdate = lastUpdate;
 	}
 

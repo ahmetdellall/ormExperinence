@@ -1,12 +1,41 @@
 package orm.ex.model;
 
-import java.sql.Timestamp;
+import java.io.Serializable;
+import java.util.Date;
 
-public class FilmCategory {
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
-	private Film film;
+@Entity
+public class FilmCategory implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@EmbeddedId
+	private FilmCategoryPk filmCategoryId;
+
+	// bi-directional many-to-one association to Category
+	@ManyToOne
+	@MapsId("categoryId") // add FilmCategoryPK's categoryId property
+	@JoinColumn(name = "category_id")
 	private Category category;
-	private Timestamp lastUpdate;
+
+	// bi-directional many-to-one association to Film
+	@ManyToOne
+	@MapsId("filmId") // add FilmCategoryPK's filmId property
+	@JoinColumn(name = "film_id")
+	private Film film;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date lastUpdate;
 
 	public Film getFilm() {
 		return film;
@@ -24,11 +53,11 @@ public class FilmCategory {
 		this.category = category;
 	}
 
-	public Timestamp getLastUpdate() {
+	public Date getLastUpdate() {
 		return lastUpdate;
 	}
 
-	public void setLastUpdate(Timestamp lastUpdate) {
+	public void setLastUpdate(Date lastUpdate) {
 		this.lastUpdate = lastUpdate;
 	}
 

@@ -1,20 +1,51 @@
 package orm.ex.model;
 
-import java.sql.Blob;
-import java.sql.Timestamp;
 
+
+import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+@Entity
 public class Staff {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(nullable = false,unique = true, columnDefinition = "TINYINT")
 	private int StaffId;
+	@Column(length = 45,nullable = false)
 	private String staffName;
+	@Column(length = 45, nullable = false)
 	private String staffLastName;
+	
+	@ManyToOne(fetch = FetchType.EAGER,  targetEntity = Address.class)
+	@JoinColumn(name = "addressId", nullable = false, columnDefinition = "SMALLINT")
 	private Address address;
-	private Blob picture;
+	
+	@Column(length = 50, nullable = true)
 	private String email;
+	
+	@ManyToOne(fetch = FetchType.LAZY )
+	@JoinColumn(name = "store_id", nullable = false)
 	private Store store;
+	
+	@Column(columnDefinition = "BOOLEAN DEFAULT TRUE", nullable = false)
 	private boolean active;
+	@Column(length = 16, nullable = false)
 	private String username;
+	@Column(length = 45, columnDefinition = "BINARY DEFAULT NULL")
 	private String password;
-	private Timestamp lastUpdate;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
+	private Date lastUpdate;
 
 	public int getStaffId() {
 		return StaffId;
@@ -48,13 +79,7 @@ public class Staff {
 		this.address = address;
 	}
 
-	public Blob getPicture() {
-		return picture;
-	}
 
-	public void setPicture(Blob picture) {
-		this.picture = picture;
-	}
 
 	public String getEmail() {
 		return email;
@@ -63,6 +88,10 @@ public class Staff {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	
+
+	
 
 	public Store getStore() {
 		return store;
@@ -96,11 +125,11 @@ public class Staff {
 		this.password = password;
 	}
 
-	public Timestamp getLastUpdate() {
+	public Date getLastUpdate() {
 		return lastUpdate;
 	}
 
-	public void setLastUpdate(Timestamp lastUpdate) {
+	public void setLastUpdate(Date lastUpdate) {
 		this.lastUpdate = lastUpdate;
 	}
 

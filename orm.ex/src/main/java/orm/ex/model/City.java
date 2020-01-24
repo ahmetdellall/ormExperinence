@@ -1,13 +1,43 @@
 package orm.ex.model;
 
-import java.sql.Timestamp;
 
+
+
+import java.util.Date;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.NaturalId;
+
+@Entity
 public class City {
 
+	@Id
+	@Column(nullable = false,unique = true , columnDefinition = "SMALLINT")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int cityId;
-	private int cityName;
+	
+	@Column(length = 50, nullable = false)
+	private String cityName;
+
+	@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	@JoinColumn(name = "countryId", referencedColumnName = "countryId", nullable = false, columnDefinition = "SMALLINT")
+	@NaturalId
 	private Country country;
-	private Timestamp cityLastUpdate;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable = false, columnDefinition =  "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
+	private Date cityLastUpdate;
 
 	public int getCityId() {
 		return cityId;
@@ -17,11 +47,11 @@ public class City {
 		this.cityId = cityId;
 	}
 
-	public int getCityName() {
+	public String getCityName() {
 		return cityName;
 	}
 
-	public void setCityName(int cityName) {
+	public void setCityName(String cityName) {
 		this.cityName = cityName;
 	}
 
@@ -33,11 +63,11 @@ public class City {
 		this.country = country;
 	}
 
-	public Timestamp getCityLastUpdate() {
+	public Date getCityLastUpdate() {
 		return cityLastUpdate;
 	}
 
-	public void setCityLastUpdate(Timestamp cityLastUpdate) {
+	public void setCityLastUpdate(Date cityLastUpdate) {
 		this.cityLastUpdate = cityLastUpdate;
 	}
 
