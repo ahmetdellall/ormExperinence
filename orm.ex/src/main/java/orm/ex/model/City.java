@@ -17,7 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.hibernate.annotations.NaturalId;
+
 
 @Entity
 public class City {
@@ -32,7 +32,6 @@ public class City {
 
 	@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
 	@JoinColumn(name = "countryId", referencedColumnName = "countryId", nullable = false, columnDefinition = "SMALLINT")
-	@NaturalId
 	private Country country;
 	
 	@Temporal(TemporalType.TIMESTAMP)

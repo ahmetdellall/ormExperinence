@@ -35,8 +35,8 @@ public class Address {
 	@JoinColumn(name = "cityId", referencedColumnName = "cityId", nullable = false)
 	private City city;
 
-	@Column(length = 10, nullable = false)
-	private int postalCode;
+	@Column(length = 10, nullable = true)
+	private String postalCode; 
 	@Column(length = 20, nullable = false)
 	private String phoneNumber;
 
@@ -84,11 +84,11 @@ public class Address {
 		this.city = city;
 	}
 
-	public int getPostalCode() {
+	public String getPostalCode() {
 		return postalCode;
 	}
 
-	public void setPostalCode(int postalCode) {
+	public void setPostalCode(String postalCode) {
 		this.postalCode = postalCode;
 	}
 

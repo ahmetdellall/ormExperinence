@@ -39,7 +39,7 @@ public class Film {
 	@Column(nullable = true)
 	private String description;
 	
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	private Date release_year ;
 	
 	@ManyToOne(fetch = FetchType.EAGER)

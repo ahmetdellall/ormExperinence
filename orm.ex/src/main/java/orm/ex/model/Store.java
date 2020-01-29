@@ -28,7 +28,8 @@ public class Store {
 	private int storeId;
 	
 
-	@OneToMany(mappedBy = "store",fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinColumn(name = "menager_staff_id")
 	private List<Staff> menagerstaff= new ArrayList<Staff>();
 	
 	@ManyToOne(fetch = FetchType.EAGER, targetEntity = Address.class)
